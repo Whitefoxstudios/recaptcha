@@ -71,7 +71,7 @@ function recaptcha_permission() {
 /**
  * Implements hook_captcha().
  */
-function recaptcha_captcha($op, $captcha_type = '',  $captcha_sid = '') {
+function recaptcha_captcha($op, $captcha_type = '', $captcha_sid = '') {
   global $language;
 
   switch ($op) {
@@ -104,7 +104,7 @@ function recaptcha_captcha($op, $captcha_type = '',  $captcha_sid = '') {
           }
 
           $attributes = array(
-            'id'=>'g-recaptcha'.$captcha_sid,
+            'id' => 'g-recaptcha' . $captcha_sid,
             'class' => 'g-recaptcha',
             'data-sitekey' => $recaptcha_site_key,
             'data-theme' => variable_get('recaptcha_theme', 'light'),
@@ -122,7 +122,7 @@ function recaptcha_captcha($op, $captcha_type = '',  $captcha_sid = '') {
             );
           }
 
-           // Filter out empty tabindex/size.
+          // Filter out empty tabindex/size.
           $attributes = array_filter($attributes);
 
           $captcha['form']['recaptcha_widget'] = array(
@@ -143,11 +143,11 @@ function recaptcha_captcha($op, $captcha_type = '',  $captcha_sid = '') {
           // on the page. If the Drupal behavior is not available yet, don't
           // worry: Drupal's attachBehaviors() will take care of it later.
           $onload_js = <<<JS
-  function recaptchaOnLoad() {
-    if (typeof Drupal.behaviors.recaptcha.attach != 'undefined') {
-      Drupal.behaviors.recaptcha.attach();
-    }
-  };
+function recaptchaOnLoad() {
+  if (typeof Drupal.behaviors.recaptcha.attach != 'undefined') {
+   Drupal.behaviors.recaptcha.attach();
+  }
+};
 JS;
           $data = array(
             '#tag' => 'script',
@@ -157,7 +157,6 @@ JS;
           drupal_add_html_head($data, 'recaptcha_onload');
 
           // @todo: #1664602: D7 does not yet support "async" in drupal_add_js().
-          // drupal_add_js(url('https://www.google.com/recaptcha/api.js', array('query' => array('hl' => $language->language), 'absolute' => TRUE)), array('defer' => TRUE, 'async' => TRUE, 'type' => 'external'));
           $data = array(
             '#tag' => 'script',
             '#value' => '',
